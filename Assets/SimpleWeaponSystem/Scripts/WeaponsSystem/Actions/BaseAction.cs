@@ -1,4 +1,5 @@
 ﻿using RolePoloGame;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using WeaponSystem.Detectors;
@@ -37,8 +38,22 @@ namespace WeaponSystem.Actions
         public bool TryPerformAction(BaseWeaponType weapon)
         {
             if (!CanPerform(weapon)) return false;
+            OnStartPerform(weapon);
             OnPerformAction(weapon);
+            OnEndPerform(weapon);
             return true;
+        }
+
+        private void OnEndPerform(BaseWeaponType weapon)
+        {
+            foreach (var module in Modules)
+                module.OnEndPerform(weapon);
+        }
+
+        private void OnStartPerform(BaseWeaponType weapon)
+        {
+            foreach (var module in Modules)
+                module.OnStartPerform(weapon);
         }
 
         protected void OnPerformAction(BaseWeaponType weapon)
@@ -71,7 +86,7 @@ namespace WeaponSystem.Actions
         /// calling <see cref="BaseWeaponModule.CanPerform"/> on each. Stores result of the check in <see cref="modulesStatus"/>
         /// </summary>
         /// <returns>true if all modules return true</returns>
-        private bool CanPerform(Types.BaseWeaponType weapon)
+        private bool CanPerform(BaseWeaponType weapon)
         {
             if (Modules.Count == 0) return true;
             modulesStatus = 0;
