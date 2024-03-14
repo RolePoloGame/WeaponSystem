@@ -1,4 +1,4 @@
-﻿using RolePoloGame;
+﻿using WeaponSystem.Core;
 
 namespace WeaponSystem.Modules
 {

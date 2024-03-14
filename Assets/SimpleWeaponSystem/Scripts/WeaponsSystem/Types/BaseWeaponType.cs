@@ -1,8 +1,9 @@
-using RolePoloGame;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using WeaponSystem.Actions;
+using WeaponSystem.Core;
 using WeaponSystem.Modules;
 
 namespace WeaponSystem.Types
@@ -35,6 +36,13 @@ namespace WeaponSystem.Types
                 Initialize(module.Action);
         }
 
+        public void TryPerform(EInputAction inputAction)
+        {
+            var action = Actions.FirstOrDefault(x => x.Input == inputAction);
+            if (action == null) return;
+            PerformAction(action.Action);
+        }
+
         private void PerformAction(BaseAction action)
         {
             action.TryPerformAction(this);
@@ -44,7 +52,7 @@ namespace WeaponSystem.Types
         protected class ActionInputPair
         {
             [field: SerializeField]
-            public object Input;
+            public EInputAction Input;
 
             [field: SerializeField]
             public BaseAction Action;

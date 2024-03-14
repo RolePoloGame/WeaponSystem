@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace RolePoloGame
+namespace WeaponSystem.Core
 {
     /// <summary>
     /// This class eases the usage of ScriptableObjects as independend instances during runtime. 

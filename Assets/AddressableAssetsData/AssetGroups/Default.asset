@@ -16,7 +16,11 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 982ecb0f7ee64e34ea1565f2b7e818ed
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 296f95ac3f6a2694885c144336eafdcf
+    m_Address: Assets/SimpleWeaponSystem/Content/Input/WeaponSystem.BasicControls.inputactions
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 276f79562e9844b42a50de1987d17c17, type: 2}
   m_SchemaSet:

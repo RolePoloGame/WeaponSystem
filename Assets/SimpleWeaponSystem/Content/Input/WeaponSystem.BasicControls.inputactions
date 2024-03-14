@@ -1,0 +1,54 @@
+{
+    "name": "WeaponSystem.BasicControls",
+    "maps": [
+        {
+            "name": "Default",
+            "id": "4e479e1b-fbf2-494b-99cf-17b9884ec5e3",
+            "actions": [
+                {
+                    "name": "PrimaryAction",
+                    "type": "Button",
+                    "id": "dd4dfa0d-96c4-4ba9-9d88-e2ccf93f0304",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SecondaryAction",
+                    "type": "Button",
+                    "id": "23796c47-8c25-4dd2-bf64-f2f046655a4b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c9291a1b-5fc6-4632-84fb-2f996cc006ad",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PrimaryAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2555c41f-97c6-43da-927b-803f7fe2dfcf",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SecondaryAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

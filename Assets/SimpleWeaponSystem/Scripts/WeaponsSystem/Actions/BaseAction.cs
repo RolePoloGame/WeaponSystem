@@ -1,7 +1,6 @@
-﻿using RolePoloGame;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using WeaponSystem.Core;
 using WeaponSystem.Detectors;
 using WeaponSystem.Interfaces;
 using WeaponSystem.Modules;
