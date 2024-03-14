@@ -9,17 +9,11 @@ namespace WeaponSystem.Types
 {
     public abstract class BaseWeaponType : RuntimeScriptableObject
     {
-        public override void OnInitialize()
-        {
-            foreach (var module in Modules)
-                Initialize(module);
-
-            foreach (var module in Actions)
-                Initialize(module.Action);
-        }
-
         [field: SerializeField]
-        public string Name { get; protected set; } = string.Empty;
+        public string Name { get; protected set; } = "new Weapon";
+        [field: SerializeField]
+        public Texture2D Icon { get; protected set; }
+
         [field: SerializeField]
         public string Description { get; protected set; } = string.Empty;
 
@@ -31,6 +25,15 @@ namespace WeaponSystem.Types
 
         [field: SerializeField]
         protected List<ActionInputPair> Actions { get; set; }
+
+        public override void OnInitialize()
+        {
+            foreach (var module in Modules)
+                Initialize(module);
+
+            foreach (var module in Actions)
+                Initialize(module.Action);
+        }
 
         private void PerformAction(BaseAction action)
         {
