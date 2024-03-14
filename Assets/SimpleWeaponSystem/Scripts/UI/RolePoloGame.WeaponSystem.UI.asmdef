@@ -1,5 +1,5 @@
 {
-    "name": "WeaponSystem.UI",
+    "name": "RolePoloGame.WeaponSystem.UI",
     "rootNamespace": "",
     "references": [
         "GUID:4e8bc12e7614aea4aa5acd90e5c24f13"
