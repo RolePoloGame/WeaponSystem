@@ -1,0 +1,16 @@
+{
+    "name": "WeaponSystem.UI",
+    "rootNamespace": "",
+    "references": [
+        "GUID:4e8bc12e7614aea4aa5acd90e5c24f13"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
