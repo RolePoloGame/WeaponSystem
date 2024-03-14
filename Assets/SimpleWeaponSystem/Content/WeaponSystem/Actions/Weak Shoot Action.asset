@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a80c68bad85b3304c801ee7017233f7d, type: 3}
   m_Name: Weak Shoot Action
   m_EditorClassIdentifier: 
-  <Detection>k__BackingField: {fileID: 0}
-  <Modules>k__BackingField: []
+  <Detection>k__BackingField: {fileID: 11400000, guid: beb707273353c844db3e09c180cd9313,
+    type: 2}
+  <Modules>k__BackingField:
+  - {fileID: 11400000, guid: 8539937b90f46d7499fc3641a729ebb3, type: 2}
   DamageMultiplier: 1

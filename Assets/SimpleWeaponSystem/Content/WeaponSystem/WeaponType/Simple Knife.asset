@@ -17,5 +17,7 @@ MonoBehaviour:
     type: 3}
   <Description>k__BackingField: 
   <BaseDamage>k__BackingField: 1
-  <Modules>k__BackingField: []
-  <Actions>k__BackingField: []
+  <Modules>k__BackingField:
+  - {fileID: 11400000, guid: deaffabb81b326b47b710be8ddaf7cd6, type: 2}
+  <Actions>k__BackingField:
+  - Action: {fileID: 0}
