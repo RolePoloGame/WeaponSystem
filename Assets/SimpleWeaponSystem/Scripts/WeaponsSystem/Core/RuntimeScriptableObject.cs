@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace WeaponSystem.Core
 {
@@ -8,6 +9,7 @@ namespace WeaponSystem.Core
     /// </summary>
     public abstract class RuntimeScriptableObject : ScriptableObject
     {
+        public abstract event Action OnChanged;
         public bool IsInitialized => _isInitialized;
         private bool _isInitialized = false;
         public virtual void OnInitialize() { }

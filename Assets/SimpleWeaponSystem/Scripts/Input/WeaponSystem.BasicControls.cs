@@ -46,6 +46,24 @@ namespace WeaponSystem.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ReloadAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""19403fcc-360f-4904-9358-7536e0fb61ed"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""e543ace0-2a71-414e-aa7b-8ee460a537ba"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -70,6 +88,28 @@ namespace WeaponSystem.Input
                     ""action"": ""SecondaryAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d870af50-5827-4ffa-8cd6-6d73202e7432"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ReloadAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7166d5d4-f386-4072-84be-f54945d2e3e4"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -80,6 +120,8 @@ namespace WeaponSystem.Input
             m_Default = asset.FindActionMap("Default", throwIfNotFound: true);
             m_Default_PrimaryAction = m_Default.FindAction("PrimaryAction", throwIfNotFound: true);
             m_Default_SecondaryAction = m_Default.FindAction("SecondaryAction", throwIfNotFound: true);
+            m_Default_ReloadAction = m_Default.FindAction("ReloadAction", throwIfNotFound: true);
+            m_Default_UseAction = m_Default.FindAction("UseAction", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -141,12 +183,16 @@ namespace WeaponSystem.Input
         private IDefaultActions m_DefaultActionsCallbackInterface;
         private readonly InputAction m_Default_PrimaryAction;
         private readonly InputAction m_Default_SecondaryAction;
+        private readonly InputAction m_Default_ReloadAction;
+        private readonly InputAction m_Default_UseAction;
         public struct DefaultActions
         {
             private @BasicControls m_Wrapper;
             public DefaultActions(@BasicControls wrapper) { m_Wrapper = wrapper; }
             public InputAction @PrimaryAction => m_Wrapper.m_Default_PrimaryAction;
             public InputAction @SecondaryAction => m_Wrapper.m_Default_SecondaryAction;
+            public InputAction @ReloadAction => m_Wrapper.m_Default_ReloadAction;
+            public InputAction @UseAction => m_Wrapper.m_Default_UseAction;
             public InputActionMap Get() { return m_Wrapper.m_Default; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -162,6 +208,12 @@ namespace WeaponSystem.Input
                     @SecondaryAction.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnSecondaryAction;
                     @SecondaryAction.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnSecondaryAction;
                     @SecondaryAction.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnSecondaryAction;
+                    @ReloadAction.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnReloadAction;
+                    @ReloadAction.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnReloadAction;
+                    @ReloadAction.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnReloadAction;
+                    @UseAction.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnUseAction;
+                    @UseAction.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnUseAction;
+                    @UseAction.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnUseAction;
                 }
                 m_Wrapper.m_DefaultActionsCallbackInterface = instance;
                 if (instance != null)
@@ -172,6 +224,12 @@ namespace WeaponSystem.Input
                     @SecondaryAction.started += instance.OnSecondaryAction;
                     @SecondaryAction.performed += instance.OnSecondaryAction;
                     @SecondaryAction.canceled += instance.OnSecondaryAction;
+                    @ReloadAction.started += instance.OnReloadAction;
+                    @ReloadAction.performed += instance.OnReloadAction;
+                    @ReloadAction.canceled += instance.OnReloadAction;
+                    @UseAction.started += instance.OnUseAction;
+                    @UseAction.performed += instance.OnUseAction;
+                    @UseAction.canceled += instance.OnUseAction;
                 }
             }
         }
@@ -180,6 +238,8 @@ namespace WeaponSystem.Input
         {
             void OnPrimaryAction(InputAction.CallbackContext context);
             void OnSecondaryAction(InputAction.CallbackContext context);
+            void OnReloadAction(InputAction.CallbackContext context);
+            void OnUseAction(InputAction.CallbackContext context);
         }
     }
 }

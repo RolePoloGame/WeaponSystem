@@ -85,6 +85,7 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
+    - WeaponTypes
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 75b26e7f44703bd4ba4b8b18eba187fa, type: 2}

@@ -9,7 +9,7 @@ namespace WeaponSystem.GameManagement
 {
     public class Database : SingletonController<Database>
     {
-        public List<BaseWeaponType> WeaponTypes { get; set; }
+        public List<BaseWeaponType> WeaponTypes { get; set; } = new();
 
         public event Action OnDatabaseLoaded;
         public bool IsLoaded = false;

@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9e2ed068d0b3a6d43bd86ce855bcc088, type: 3}
-  m_Name: Limited with Magazine (500, -, 1)
+  m_Name: Limited with Magazine (64, 8, 1)
   m_EditorClassIdentifier: 
-  allowedAmmoType:
+  <AllowedAmmoType>k__BackingField:
   - {fileID: 11400000, guid: 1305e5fc319fe0d4fae79d52e074776d, type: 2}
-  maxAmmunition: 500
-  magazineSize: 0
-  ammoPerShot: 1
-  autoReload: 1
-  wastesAmmoOnReload: 0
-  reloadTime: 0.2
+  <MaxAmmunition>k__BackingField: 64
+  <MagazineSize>k__BackingField: 8
+  <AmmoPerShot>k__BackingField: 1
+  <AutoReloadOnEmpty>k__BackingField: 1
+  <WastesAmmoOnReload>k__BackingField: 1
+  <ReloadTime>k__BackingField: 0.2

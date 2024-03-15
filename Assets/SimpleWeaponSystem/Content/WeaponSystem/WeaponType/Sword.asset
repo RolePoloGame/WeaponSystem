@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5a97af78da59044faeaf96e37dd61d3, type: 3}
-  m_Name: Simple Pistol
+  m_Script: {fileID: 11500000, guid: f4fd12c1cd9860d409ea1cd6fc80f6d5, type: 3}
+  m_Name: Sword
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Pistol
-  <Icon>k__BackingField: {fileID: 2800000, guid: 7366bcaa893b7ec47b95eacb9f5e6c4c,
+  <Name>k__BackingField: Sword
+  <Icon>k__BackingField: {fileID: 2800000, guid: cfdf0fd433ee5e049b04a2d16396a668,
     type: 3}
-  <Description>k__BackingField: Example pistol
+  <Description>k__BackingField: 
   <BaseDamage>k__BackingField: 1
-  <Action>k__BackingField: {fileID: 11400000, guid: 03398bc2163b8624c87f240dc37a8d15,
+  <Action>k__BackingField: {fileID: 11400000, guid: 2c58f9261ba37514ca342ca51f277dd5,
     type: 2}

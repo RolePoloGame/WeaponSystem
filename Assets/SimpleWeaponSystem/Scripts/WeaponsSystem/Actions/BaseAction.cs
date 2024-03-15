@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using WeaponSystem.Core;
 using WeaponSystem.Detectors;
@@ -16,13 +17,17 @@ namespace WeaponSystem.Actions
         [field: SerializeField]
         public List<BaseWeaponModule> Modules { get; protected set; }
 
+        public override event Action OnChanged;
         public int ModulesStatus => modulesStatus;
         private int modulesStatus;
 
         public override void OnInitialize()
         {
-            foreach (var module in Modules)
-                Initialize(module);
+            for (int i = 0; i < Modules.Count; i++)
+            {
+                Modules[i] = Initialize(Modules[i]);
+                Modules[i].OnChanged += () => OnChanged?.Invoke();
+            }   
         }
 
         public virtual float CalculateDamage(BaseWeaponType weapon)
@@ -97,6 +102,18 @@ namespace WeaponSystem.Actions
                 modulesStatus |= 1 << i;
             }
             return modulesStatus == 0;
+        }
+
+        public void OnShow()
+        {
+            foreach (var module in Modules) 
+                module.OnShow();
+        }
+
+        public void OnHide()
+        {
+            foreach (var module in Modules)
+                module.OnHide();
         }
     }
 }

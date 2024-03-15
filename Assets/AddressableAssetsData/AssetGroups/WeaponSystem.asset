@@ -20,7 +20,8 @@ MonoBehaviour:
   - m_GUID: 1512725c2d76acd44ae49b90a9239c68
     m_Address: WeaponTypes
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - WeaponTypes
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 276f79562e9844b42a50de1987d17c17, type: 2}
   m_SchemaSet:

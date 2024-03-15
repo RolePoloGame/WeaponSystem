@@ -2,7 +2,9 @@
     "name": "RolePoloGame.WeaponSystem.UI",
     "rootNamespace": "",
     "references": [
-        "GUID:4e8bc12e7614aea4aa5acd90e5c24f13"
+        "GUID:89bdff5720a17f74aae0cc26f09926c9",
+        "GUID:4e8bc12e7614aea4aa5acd90e5c24f13",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

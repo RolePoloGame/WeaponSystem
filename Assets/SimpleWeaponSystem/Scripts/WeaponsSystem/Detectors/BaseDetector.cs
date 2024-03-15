@@ -11,7 +11,7 @@ namespace WeaponSystem.Detectors
 
         public virtual void TryDetect(DetectedAction action)
         {
-            Debug.Log($"Not implemented {nameof(HitScanDetector)}. Returning empty Array");
+            Debug.LogWarning($"Not implemented {nameof(HitScanDetector)}. Returning empty Array");
             action.Invoke(Array.Empty<IDetectable>(), Vector3.zero);
         }
     }

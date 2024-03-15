@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using WeaponSystem.Ammunition;
 using WeaponSystem.Types;
@@ -8,92 +10,146 @@ namespace WeaponSystem.Modules
     [CreateAssetMenu(fileName = "new AmmunitionModule", menuName = "WeaponSystem/Module/Ammunition")]
     public class AmmunitionModule : BaseWeaponModule
     {
-        [SerializeField]
-        private List<AmmunitionType> allowedAmmoType = new();
+        [field: SerializeField]
+        public List<AmmunitionType> AllowedAmmoType { get; private set; } = new();
 
-        [SerializeField, Tooltip("If set to 0, no limit is present")]
-        private int maxAmmunition = 0;
+        [field: SerializeField, Tooltip("If set to 0, no limit is present")]
+        public int MaxAmmunition { get; private set; } = 0;
 
-        [SerializeField, Tooltip("If set to 0, no limit is present")] private int magazineSize = 0;
+        [field: SerializeField, Tooltip("If set to 0, no limit is present")]
+        public int MagazineSize { get; private set; } = 0;
+        [field: SerializeField]
+        public int AmmoPerShot { get; private set; } = 0;
+        [field: SerializeField]
+        public bool AutoReloadOnEmpty { get; private set; } = true;
+        [field: SerializeField]
+        public bool WastesAmmoOnReload { get; private set; } = false;
 
-
-        [SerializeField] private int ammoPerShot = 0;
-        [SerializeField] private bool autoReload = true;
-        [SerializeField] private bool wastesAmmoOnReload = false;
-
-        [SerializeField]
-        private float reloadTime = 0.2f;
+        [field: SerializeField]
+        public float ReloadTime { get; private set; } = 0.2f;
 
         //Used only at runtime
-        private int currentAmmunition = 0;
-        private int currentMagazine = 0;
+        public int CurrentAmmunition { get; private set; } = 0;
+        public int CurrentMagazine { get; private set; } = 0;
+        public bool IsReloading => isReloadActive;
+        public bool IsTimerFinished => reloadTimer < 0.0f;
+
+        private float reloadTimer = 0.0f;
+        private bool isReloadActive = false;
+
+        public override void Tick(float timeDelta)
+        {
+            if (!isReloadActive) return;
+            reloadTimer -= timeDelta;
+            if (!IsTimerFinished) return;
+            ApplyReload();
+        }
 
         public override void OnInitialize()
         {
-            currentAmmunition = 0;
-            currentMagazine = 0;
+            CurrentAmmunition = 0;
+            CurrentMagazine = 0;
+        }
+
+        public override void OnHide()
+        {
+            CancelReload();
+
+        }
+
+        private void CancelReload()
+        {
+            if (!IsReloading) return;
+            isReloadActive = false;
+            reloadTimer = 0.0f;
         }
 
         public override bool CanPerform(BaseWeaponType weapon)
         {
-            return ammoPerShot >= currentMagazine;
+            if (IsReloading) return false;
+            return (MagazineSize > 0 && CurrentMagazine >= AmmoPerShot) || CurrentAmmunition >= AmmoPerShot;
         }
 
         public override void OnStartPerform(BaseWeaponType weapon)
         {
-            currentMagazine -= ammoPerShot;
+            CancelReload();
+            if (MagazineSize > 0)
+                CurrentMagazine -= AmmoPerShot;
+            else
+                CurrentAmmunition -= AmmoPerShot;
         }
 
         public override void OnEndPerform(BaseWeaponType weapon)
         {
-            if (autoReload)
+            OnModuleChanged();
+            if (AutoReloadOnEmpty && MagazineSize > 0 && CurrentMagazine == 0)
                 Reload();
         }
 
         public void Reload()
         {
             if (!CanReload()) return;
-            if (wastesAmmoOnReload)
-                currentMagazine = 0;
-            int emptySpaceInMagazine = (magazineSize - currentMagazine);
-            var reloadAmount = currentAmmunition < emptySpaceInMagazine ? currentAmmunition : currentAmmunition - emptySpaceInMagazine;
+            isReloadActive = true;
+            reloadTimer = ReloadTime;
+        }
 
-            currentMagazine += reloadAmount;
-            currentAmmunition -= reloadAmount;
+        private void ApplyReload()
+        {
+            if (WastesAmmoOnReload)
+                CurrentMagazine = 0;
+            int emptySpaceInMagazine = (MagazineSize - CurrentMagazine);
+            var reloadAmount = CurrentAmmunition < emptySpaceInMagazine ? CurrentAmmunition : CurrentAmmunition - emptySpaceInMagazine;
+
+            CurrentMagazine += reloadAmount;
+            CurrentAmmunition -= reloadAmount;
+            isReloadActive = false;
+            reloadTimer = 0.0f;
+            OnModuleChanged();
+            Debug.Log("Reload performed");
         }
 
         private bool CanReload()
         {
-            var hasMagazines = magazineSize > 0;
-            var magazineNeedsReload = currentMagazine < magazineSize;
-            var hasAmmunition = currentAmmunition > 0;
+            var hasMagazines = MagazineSize > 0;
+            var magazineNeedsReload = CurrentMagazine < MagazineSize;
+            var hasAmmunition = CurrentAmmunition > 0;
 
-            return hasMagazines && hasAmmunition && magazineNeedsReload;
+            return !IsReloading && hasMagazines && hasAmmunition && magazineNeedsReload;
         }
 
-        public bool CanPickAmmo(AmmunitionType type)
+        private bool CanAddAmmo(AmmunitionType type)
         {
-            if (maxAmmunition == 0) return true;
-            if (allowedAmmoType.Count == 0) return false;
-            if (!allowedAmmoType.Contains(type)) return false;
-            return currentAmmunition < maxAmmunition;
+            if (MaxAmmunition == 0) return true;
+            if (AllowedAmmoType.Count == 0) return false;
+            if (!AllowedAmmoType.Contains(type)) return false;
+            return CurrentAmmunition < MaxAmmunition;
         }
 
-        public void AddAmmo(int ammo)
+        public void AddAmmo(AmmunitionType type, int ammo)
         {
-            if (maxAmmunition == 0)
+            if (!CanAddAmmo(type)) return;
+            if (MaxAmmunition == 0)
             {
-                currentAmmunition += ammo;
+                CurrentAmmunition += ammo;
+                OnModuleChanged();
                 return;
             }
 
-            if (ammo + currentAmmunition > maxAmmunition)
+            if (ammo + CurrentAmmunition > MaxAmmunition)
             {
-                currentAmmunition = maxAmmunition;
+                CurrentAmmunition = MaxAmmunition;
+                OnModuleChanged();
                 return;
             }
 
-            currentAmmunition += ammo;
+            CurrentAmmunition += ammo;
+            OnModuleChanged();
+        }
+
+        public float GetReloadRatio()
+        {
+            if (!IsReloading) return 0.0f;
+            return reloadTimer / ReloadTime;
         }
     }
 }

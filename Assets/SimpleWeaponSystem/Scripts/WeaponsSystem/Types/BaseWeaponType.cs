@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using WeaponSystem.Actions;
@@ -22,31 +21,41 @@ namespace WeaponSystem.Types
         public int BaseDamage { get; protected set; } = 0;
 
         [field: SerializeField]
-        public List<BaseWeaponModule> Modules { get; protected set; }
+        protected BaseAction Action { get; set; }
 
-        [field: SerializeField]
-        protected List<ActionInputPair> Actions { get; set; }
+        public override event Action OnChanged;
+
+        public void OnHide() => Action.OnHide();
+        public void OnShow() => Action.OnShow();
 
         public override void OnInitialize()
         {
-            foreach (var module in Modules)
-                Initialize(module);
+            this.Action = Initialize(Action);
+            Action.OnChanged += () => OnChanged?.Invoke();
+        }
 
-            foreach (var module in Actions)
-                Initialize(module.Action);
+
+        public void TickModules(float timeDelta)
+        {
+            foreach (var module in Action.Modules)
+                module.Tick(timeDelta);
+        }
+
+        public bool TryGetModule<T>(out T ammunitionModule) where T : BaseWeaponModule
+        {
+            ammunitionModule = null;
+            if (Action == null) return false;
+            if (Action.Modules == null) return false;
+            ammunitionModule = Action.Modules.FirstOrDefault(x => x.GetType() == typeof(T)) as T;
+            return ammunitionModule != null;
         }
 
         public void TryPerform(EInputAction inputAction)
         {
-            var action = Actions.FirstOrDefault(x => x.Input == inputAction);
-            if (action == null) return;
-            PerformAction(action.Action);
+            PerformActionInternal(Action);
         }
 
-        private void PerformAction(BaseAction action)
-        {
-            action.TryPerformAction(this);
-        }
+        private void PerformActionInternal(BaseAction action) => action.TryPerformAction(this);
 
         [Serializable]
         protected class ActionInputPair
