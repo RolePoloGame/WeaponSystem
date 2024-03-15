@@ -98,10 +98,17 @@ namespace WeaponSystem.Modules
             if (WastesAmmoOnReload)
                 CurrentMagazine = 0;
             int emptySpaceInMagazine = (MagazineSize - CurrentMagazine);
-            var reloadAmount = CurrentAmmunition < emptySpaceInMagazine ? CurrentAmmunition : CurrentAmmunition - emptySpaceInMagazine;
+
+            var reloadAmount = CurrentAmmunition < emptySpaceInMagazine ? CurrentAmmunition : emptySpaceInMagazine;
 
             CurrentMagazine += reloadAmount;
             CurrentAmmunition -= reloadAmount;
+
+
+            if (CurrentAmmunition < 0) CurrentAmmunition = 0;
+            if (CurrentMagazine < 0) CurrentMagazine = 0;
+            if (MaxAmmunition < 0) CurrentAmmunition = 0;
+
             isReloadActive = false;
             reloadTimer = 0.0f;
             OnModuleChanged();
