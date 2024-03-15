@@ -17,6 +17,6 @@ MonoBehaviour:
   <MaxAmmunition>k__BackingField: 16
   <MagazineSize>k__BackingField: 2
   <AmmoPerShot>k__BackingField: 2
-  <AutoReloadOnEmpty>k__BackingField: 1
+  <AutoReloadOnEmpty>k__BackingField: 0
   <WastesAmmoOnReload>k__BackingField: 0
   <ReloadTime>k__BackingField: 4

@@ -65,7 +65,10 @@ namespace WeaponSystem.Modules
         public override bool CanPerform(BaseWeaponType weapon)
         {
             if (IsReloading) return false;
-            return (MagazineSize > 0 && CurrentMagazine >= AmmoPerShot) || CurrentAmmunition >= AmmoPerShot;
+            var usesMagazine = MagazineSize > 0;
+            bool canPerformFromMagazine = (usesMagazine && CurrentMagazine >= AmmoPerShot);
+            bool canPerformFromPureAmmo = CurrentAmmunition >= AmmoPerShot;
+            return (usesMagazine && canPerformFromMagazine) || (!usesMagazine && canPerformFromPureAmmo);
         }
 
         public override void OnStartPerform(BaseWeaponType weapon)

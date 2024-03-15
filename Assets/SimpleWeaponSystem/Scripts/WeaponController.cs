@@ -74,6 +74,13 @@ namespace WeaponSystem.Controllers
         private void DebugAddAmmo()
         {
             if (!currentWeapon.TryGetModule<AmmunitionModule>(out var module)) return;
+            if (module.AllowedAmmoType.Count == 0)
+            {
+                Debug.LogError($"{module.name} has no assigned {nameof(module.AllowedAmmoType)}");
+                return;
+            }
+
+            //Grabbing a random allowed ammo type
             var index = Random.Range(0, module.AllowedAmmoType.Count);
             var type = module.AllowedAmmoType[index];
             int amount = 30;

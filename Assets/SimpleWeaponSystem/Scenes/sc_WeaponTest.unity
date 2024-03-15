@@ -440,7 +440,7 @@ GameObject:
   - component: {fileID: 836825498}
   - component: {fileID: 836825497}
   m_Layer: 0
-  m_Name: WeaponController
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -458,7 +458,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbd0b9fe4db0a704889907a299f4a853, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <WeaponCount>k__BackingField: 0
 --- !u!4 &836825498
 Transform:
   m_ObjectHideFlags: 0
