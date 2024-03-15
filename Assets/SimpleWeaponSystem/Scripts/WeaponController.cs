@@ -16,9 +16,6 @@ namespace WeaponSystem.Controllers
 
         private int currentIndex = -1;
 
-        [field: SerializeField]
-        public int WeaponCount { get; private set; }
-
         private void Start()
         {
             if (Database.Instance.IsLoaded)
@@ -101,7 +98,6 @@ namespace WeaponSystem.Controllers
             Weapons = Database.Instance.WeaponTypes;
             for (var i = 0; i < Weapons.Count; i++)
                 Weapons[i] = RuntimeScriptableObject.Initialize(Weapons[i]);
-            WeaponCount = Weapons.Count;
             if (Weapons.Count == 0) return;
             currentIndex = 0;
             UpdateWeapon();

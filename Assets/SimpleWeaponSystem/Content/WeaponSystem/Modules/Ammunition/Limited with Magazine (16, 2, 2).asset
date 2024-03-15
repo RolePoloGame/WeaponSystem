@@ -19,4 +19,4 @@ MonoBehaviour:
   <AmmoPerShot>k__BackingField: 2
   <AutoReloadOnEmpty>k__BackingField: 1
   <WastesAmmoOnReload>k__BackingField: 0
-  <ReloadTime>k__BackingField: 1
+  <ReloadTime>k__BackingField: 4

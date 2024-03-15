@@ -17,6 +17,9 @@ namespace WeaponSystem.Actions
         [field: SerializeField]
         public List<BaseWeaponModule> Modules { get; protected set; }
 
+        /// <summary>
+        /// Is invoked when module is modified
+        /// </summary>
         public override event Action OnChanged;
         public int ModulesStatus => modulesStatus;
         private int modulesStatus;
@@ -27,11 +30,15 @@ namespace WeaponSystem.Actions
             {
                 Modules[i] = Initialize(Modules[i]);
                 Modules[i].OnChanged += () => OnChanged?.Invoke();
-            }   
+            }
         }
 
+        /// <summary>
+        /// Calculates damage based on a given weapon.
+        /// </summary>
         public virtual float CalculateDamage(BaseWeaponType weapon)
         {
+            //TODO: Create Module Type that can modify damage
             return weapon.BaseDamage;
         }
 
@@ -48,18 +55,32 @@ namespace WeaponSystem.Actions
             return true;
         }
 
+        /// <summary>
+        /// Is called right after Action is performed. 
+        /// Calls <see cref="BaseWeaponModule.OnEndPerform(BaseWeaponType)"/> on each Module in <see cref="Modules"/>
+        /// </summary>
+        /// <param name="weapon">Weapon that performs an Action</param>
         private void OnEndPerform(BaseWeaponType weapon)
         {
             foreach (var module in Modules)
                 module.OnEndPerform(weapon);
         }
 
+        /// <summary>
+        /// Is called right before Action is performed. 
+        /// Calls <see cref="BaseWeaponModule.OnStartPerform(BaseWeaponType)"/> on each Module in <see cref="Modules"/>
+        /// </summary>
+        /// <param name="weapon">Weapon that performs an Action</param>
         private void OnStartPerform(BaseWeaponType weapon)
         {
             foreach (var module in Modules)
                 module.OnStartPerform(weapon);
         }
-
+        /// <summary>
+        /// Is called when action is performed. Runs detection using <see cref="Detection"/> and calls <see cref="OnPerformOnTarget"/>
+        /// Calls <see cref="BaseWeaponModule.OnStartPerform(BaseWeaponType)"/> on each Module in <see cref="Modules"/>
+        /// </summary>
+        /// <param name="weapon">Weapon that performs an Action</param>
         protected void OnPerformAction(BaseWeaponType weapon)
         {
             Detection.TryDetect((detected, hitPoint) =>
@@ -69,6 +90,12 @@ namespace WeaponSystem.Actions
                     OnPerformOnTarget(target, weapon, hitPoint);
             });
         }
+        /// <summary>
+        /// Called when action is performed
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="weapon"></param>
+        /// <param name="hitPoint"></param>
         protected abstract void OnPerformOnTarget(IDetectable target, BaseWeaponType weapon, Vector3 hitPoint);
 
         public List<BaseWeaponModule> GetFailedModules()
@@ -103,13 +130,17 @@ namespace WeaponSystem.Actions
             }
             return modulesStatus == 0;
         }
-
+        /// <summary>
+        /// Is called when weapon is selected
+        /// </summary>
         public void OnShow()
         {
-            foreach (var module in Modules) 
+            foreach (var module in Modules)
                 module.OnShow();
         }
-
+        /// <summary>
+        /// Is called when weapon is deselected
+        /// </summary>
         public void OnHide()
         {
             foreach (var module in Modules)
