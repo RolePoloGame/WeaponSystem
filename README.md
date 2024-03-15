@@ -32,4 +32,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## About the Author
 
-This project is maintained by Przemysław `Polo` Polek. Feel free to reach out with any questions or feedback.
+This project is maintained by Przemysław Polo Polek. Feel free to reach out with any questions or feedback.
